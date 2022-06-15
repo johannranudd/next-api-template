@@ -8,6 +8,7 @@ async function handler(req, res) {
   const fileData = fs.readFileSync(filePath);
   //   parse data
   const data = JSON.parse(fileData);
+  console.log(data);
 
   if (req.method === 'POST') {
     const fName = req.body.fName;

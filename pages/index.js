@@ -8,8 +8,7 @@ import { getData } from '../utils/fetch';
 
 export default function Home(props) {
   const [people, setPeople] = useState(props.loadedData.data);
-  // const people = props.loadedData.data;
-  // console.log(props.loadedData.data);
+
   const fNameRef = useRef();
   const lNameRef = useRef();
   const ageRef = useRef();
@@ -33,8 +32,6 @@ export default function Home(props) {
         'Content-Type': 'application/json',
       },
     });
-    // .then((res) => res.json())
-    // .then((data) => console.log(data));
 
     setPeople((prev) => {
       const newArray = [...prev, newPerson];
@@ -44,11 +41,9 @@ export default function Home(props) {
 
   async function handleDelete(e) {
     const targetID = Number(e.currentTarget.parentNode.dataset.id);
-    // console.log(targetID);
-
     const filteredPeople = people.filter((person) => person.id === targetID);
     const notEqualPerson = people.filter((person) => person.id !== targetID);
-    // console.log(filteredPeople[0].id);
+
     fetch('/api/feedback', {
       method: 'DELETE',
       body: JSON.stringify(filteredPeople[0].id),
@@ -78,10 +73,10 @@ export default function Home(props) {
         <hr />
         <ul>
           {people.map((person) => {
-            const { id, fName, lName } = person;
+            const { id, fName, lName, age } = person;
             return (
               <li key={id} data-id={id}>
-                {fName} {lName}
+                {fName} {lName} {age}
                 <button onClick={(e) => handleDelete(e)}>delete</button>
               </li>
             );
