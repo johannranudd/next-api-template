@@ -17,3 +17,12 @@ export function AppWrapper({ children }) {
 export function useAppContext() {
   return useContext(AppContext);
 }
+
+// export async function getInitialProps(context) {
+//   console.log(context);
+//   return {
+//     props: {
+//       test: 'sgfdg',
+//     },
+//   };
+// }
