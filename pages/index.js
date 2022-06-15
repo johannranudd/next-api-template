@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <StyledDiv>
-        test 1
+        test 1 test 2
         <button
           onClick={() =>
             dispatch({ type: 'CHANGE_STATE', payload: 'new state value' })
