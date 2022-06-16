@@ -26,13 +26,13 @@ export default async function handler(req, res) {
       text: req.body.text,
     };
 
-    data.push(newPerson);
+    await data.push(newPerson);
     fs.writeFileSync(filePath, JSON.stringify(data));
 
     res.status(201).json({ data });
   } else if (req.method === 'DELETE') {
     const deleteArray = req.body;
-    data.push(deleteArray);
+    await data.push(deleteArray);
     fs.writeFileSync(filePath, JSON.stringify(deleteArray));
     res.status(202).json({ data });
   } else {
