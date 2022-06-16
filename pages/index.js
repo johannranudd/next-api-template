@@ -94,7 +94,9 @@ export default function Home(props) {
 }
 
 export async function getStaticProps() {
-  const data = await getData('http://localhost:3000/api/people');
+  const data = await getData(
+    'https://next-api-template.vercel.app//api/people'
+  );
 
   return {
     props: {
