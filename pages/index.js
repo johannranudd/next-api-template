@@ -3,81 +3,81 @@ import Image from 'next/image';
 import { useRef, useState, useEffect } from 'react';
 import { StyledDiv } from '../styles/index.styles';
 import { useAppContext } from '../context/context';
-// import { getApiData } from '../utils/filePath';
 import { getData } from '../utils/fetch';
 
 export default function Home(props) {
-  const [people, setPeople] = useState(props.loadedData.data);
+  const people = props.data.data;
 
   const fNameRef = useRef();
   const lNameRef = useRef();
-  const ageRef = useRef();
+  const emailRef = useRef();
+  const textRef = useRef();
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    const fName = fNameRef.current.value;
-    const lName = lNameRef.current.value;
-    const age = ageRef.current.value;
 
-    const newPerson = {
-      id: Date.now(),
-      fName: fName,
-      lName: lName,
-      age: age,
-    };
-    fetch('/api/feedback', {
-      method: 'POST',
-      body: JSON.stringify(newPerson),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    if (
+      fNameRef.current.value &&
+      lNameRef.current.value &&
+      emailRef.current.value &&
+      textRef.current.value
+    ) {
+      const formData = {
+        id: Date.now(),
+        'first name': fNameRef.current.value,
+        'last name': lNameRef.current.value,
+        email: emailRef.current.value,
+        text: textRef.current.value,
+      };
 
-    setPeople((prev) => {
-      const newArray = [...prev, newPerson];
-      return newArray;
-    });
-  }
-
-  async function handleDelete(e) {
-    const targetID = Number(e.currentTarget.parentNode.dataset.id);
-    const filteredPeople = people.filter((person) => person.id === targetID);
-    const notEqualPerson = people.filter((person) => person.id !== targetID);
-
-    fetch('/api/feedback', {
-      method: 'DELETE',
-      body: JSON.stringify(filteredPeople[0].id),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    setPeople(notEqualPerson);
+      fetch('/api/people', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    }
   }
 
   return (
     <>
       <StyledDiv>
         <form onSubmit={handleSubmit}>
-          <label htmlFor='fName'>First name</label>
+          <label htmlFor='fName'>first name</label>
           <input ref={fNameRef} type='text' id='fName' name='fName' />
 
-          <label htmlFor='lName'>Last name</label>
+          <label htmlFor='lName'>last name</label>
           <input ref={lNameRef} type='text' id='lName' name='lName' />
 
-          <label htmlFor='age'>Age</label>
-          <input ref={ageRef} type='number' id='age' name='age' />
+          <label htmlFor='email'>Email</label>
+          <input ref={emailRef} type='email' id='email' name='email' />
 
-          <button type='submit'>Submit</button>
+          <textarea
+            ref={textRef}
+            name='text'
+            id='text'
+            cols='30'
+            rows='10'
+          ></textarea>
+
+          <button type='submit'>Submit form</button>
         </form>
-        <hr />
         <ul>
           {people.map((person) => {
-            const { id, fName, lName, age } = person;
+            const {
+              id,
+              'first name': fName,
+              'last name': lName,
+              email,
+              text,
+            } = person;
             return (
               <li key={id} data-id={id}>
-                {fName} {lName} {age}
-                <button onClick={(e) => handleDelete(e)}>delete</button>
+                <p>{fName}</p>
+                <p>{lName}</p>
+                <p>{email}</p>
+                <p>{text}</p>
               </li>
             );
           })}
@@ -87,12 +87,12 @@ export default function Home(props) {
   );
 }
 
-export async function getStaticProps(context) {
-  const data = await getData('http://localhost:3000/api/feedback');
+export async function getStaticProps() {
+  const data = await getData('http://localhost:3000/api/people');
 
   return {
     props: {
-      loadedData: data,
+      data,
       revalidate: 5,
       notFound: false,
     },
