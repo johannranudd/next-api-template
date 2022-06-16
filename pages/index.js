@@ -40,6 +40,11 @@ export default function Home(props) {
     }
   }
 
+  function handleDelete(e) {
+    const elementID = Number(e.target.parentNode.dataset.id);
+    console.log(elementID);
+  }
+
   return (
     <>
       <StyledDiv>
@@ -78,6 +83,7 @@ export default function Home(props) {
                 <p>{lName}</p>
                 <p>{email}</p>
                 <p>{text}</p>
+                <button onClick={handleDelete}>Delete</button>
               </li>
             );
           })}
