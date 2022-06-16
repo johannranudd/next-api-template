@@ -37,6 +37,7 @@ export default function Home(props) {
           'Content-Type': 'application/json',
         },
       });
+      // .then(res => res.json()).then(data => console.log(data));
       setPeople([...people, formData]);
     }
   }
