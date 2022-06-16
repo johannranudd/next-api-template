@@ -1,13 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 
-export default async function handler(req, res) {
-  // get file path
-  const filePath = path.join(process.cwd(), 'data', 'people.json');
-  //   read data
+export function buildPath() {
+  return path.join(process.cwd(), 'data', 'people.json');
+}
+
+export function extractData(filePath) {
   const fileData = fs.readFileSync(filePath);
-  //   parse data
   const data = JSON.parse(fileData);
+  return data;
+}
+
+export default async function handler(req, res) {
+  const filePath = buildPath();
+  const data = extractData(filePath);
 
   if (req.method === 'POST') {
     // Process a POST request

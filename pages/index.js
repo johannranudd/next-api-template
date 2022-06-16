@@ -3,10 +3,17 @@ import Image from 'next/image';
 import { useRef, useState, useEffect } from 'react';
 import { StyledDiv } from '../styles/index.styles';
 import { useAppContext } from '../context/context';
-import { getData } from '../utils/fetch';
+import { buildPath, extractData } from './api/people';
+// import { getData } from '../utils/fetch';
+// import { getFilePathData } from '../utils/fetch';
+// import fs from 'fs';
+// import path from 'path';
 
 export default function Home(props) {
-  const people = props.data.data;
+  const people = props.data;
+  // console.log(props.data);
+  // const router = useRouter();
+  // console.log(router.asPath);
 
   const fNameRef = useRef();
   const lNameRef = useRef();
@@ -94,9 +101,8 @@ export default function Home(props) {
 }
 
 export async function getStaticProps() {
-  const data = await getData(
-    'https://next-api-template.vercel.app//api/people'
-  );
+  const filePath = buildPath();
+  const data = extractData(filePath);
 
   return {
     props: {
