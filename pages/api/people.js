@@ -30,6 +30,11 @@ export default async function handler(req, res) {
     fs.writeFileSync(filePath, JSON.stringify(data));
 
     res.status(201).json({ data });
+  } else if (req.method === 'DELETE') {
+    const deleteArray = req.body;
+    data.push(deleteArray);
+    fs.writeFileSync(filePath, JSON.stringify(deleteArray));
+    res.status(202).json({ data });
   } else {
     // Handle any other HTTP method
     res.status(200).json({ data });

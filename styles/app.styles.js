@@ -78,8 +78,8 @@ export const GlobalStyle = createGlobalStyle`
     }
 
 
-html,
 body {
+  position: relative;
   min-height: 100vh;
   background:  ${colors.clrLightBlueGradiant};
 }

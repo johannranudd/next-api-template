@@ -12,6 +12,7 @@ export const StyledDiv = styled.div`
     }
   }
   ul {
+    padding-bottom: 10rem;
     li {
       border: 1px solid red;
     }

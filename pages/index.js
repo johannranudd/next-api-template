@@ -4,16 +4,9 @@ import { useRef, useState, useEffect } from 'react';
 import { StyledDiv } from '../styles/index.styles';
 import { useAppContext } from '../context/context';
 import { buildPath, extractData } from './api/people';
-// import { getData } from '../utils/fetch';
-// import { getFilePathData } from '../utils/fetch';
-// import fs from 'fs';
-// import path from 'path';
 
 export default function Home(props) {
-  const people = props.data;
-  // console.log(props.data);
-  // const router = useRouter();
-  // console.log(router.asPath);
+  const [people, setPeople] = useState(props.data);
 
   const fNameRef = useRef();
   const lNameRef = useRef();
@@ -44,12 +37,23 @@ export default function Home(props) {
           'Content-Type': 'application/json',
         },
       });
+      setPeople([...people, formData]);
     }
   }
 
   function handleDelete(e) {
     const elementID = Number(e.target.parentNode.dataset.id);
-    console.log(elementID);
+    const notEqualToID = people.filter((person) => person.id !== elementID);
+    const EqualToID = people.filter((person) => person.id === elementID);
+
+    fetch('/api/people', {
+      method: 'DELETE',
+      body: JSON.stringify(notEqualToID),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    setPeople(notEqualToID);
   }
 
   return (
@@ -90,7 +94,7 @@ export default function Home(props) {
                 <p>{lName}</p>
                 <p>{email}</p>
                 <p>{text}</p>
-                <button onClick={handleDelete}>Delete</button>
+                <button onClick={(e) => handleDelete(e)}>Delete</button>
               </li>
             );
           })}
