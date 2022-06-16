@@ -34,6 +34,7 @@ export default function Home(props) {
         method: 'POST',
         body: JSON.stringify(formData),
         headers: {
+          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
       }).then(setPeople([...people, formData]));
@@ -60,6 +61,7 @@ export default function Home(props) {
       method: 'DELETE',
       body: JSON.stringify(notEqualToID),
       headers: {
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
     }).then(setPeople(notEqualToID));
