@@ -13,7 +13,7 @@ export default function Home(props) {
   const emailRef = useRef();
   const textRef = useRef();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (
@@ -36,16 +36,25 @@ export default function Home(props) {
         headers: {
           'Content-Type': 'application/json',
         },
-      });
+      }).then(setPeople([...people, formData]));
+
       // .then(res => res.json()).then(data => console.log(data));
-      setPeople([...people, formData]);
+
+      // const res = await fetch('/api/people', {
+      //   method: 'POST',
+      //   body: JSON.stringify(formData),
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      // });
+      // const data = await res.json();
     }
   }
 
   function handleDelete(e) {
     const elementID = Number(e.target.parentNode.dataset.id);
     const notEqualToID = people.filter((person) => person.id !== elementID);
-    const EqualToID = people.filter((person) => person.id === elementID);
+    // const EqualToID = people.filter((person) => person.id === elementID);
 
     fetch('/api/people', {
       method: 'DELETE',
@@ -53,8 +62,7 @@ export default function Home(props) {
       headers: {
         'Content-Type': 'application/json',
       },
-    });
-    setPeople(notEqualToID);
+    }).then(setPeople(notEqualToID));
   }
 
   return (
