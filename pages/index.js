@@ -7,53 +7,31 @@ import { buildPath, extractData } from '../utils/fetch';
 
 export default function Home(props) {
   const [people, setPeople] = useState(props.data);
+  // console.log(people);
 
   const fNameRef = useRef();
-  const lNameRef = useRef();
-  const emailRef = useRef();
-  const textRef = useRef();
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const fName = fNameRef.current.value;
 
-    if (
-      fNameRef.current.value &&
-      lNameRef.current.value &&
-      emailRef.current.value &&
-      textRef.current.value
-    ) {
-      const formData = {
+    if (fName) {
+      const person = {
         id: Date.now(),
-        'first name': fNameRef.current.value,
-        'last name': lNameRef.current.value,
-        email: emailRef.current.value,
-        text: textRef.current.value,
+        fName: fName,
       };
-
-      fetch('/api/post', {
+      const res = await fetch('/api/handler', {
         method: 'POST',
-        body: JSON.stringify(formData),
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-      }).then(setPeople([...people, formData]));
+        body: JSON.stringify(person),
+      });
+      const getData = await res.json();
+      setPeople(getData.data);
+      fNameRef.current.value = '';
     }
-  }
-
-  function handleDelete(e) {
-    const elementID = Number(e.target.parentNode.dataset.id);
-    const notEqualToID = people.filter((person) => person.id !== elementID);
-    // const EqualToID = people.filter((person) => person.id === elementID);
-
-    fetch('/api/delete', {
-      method: 'DELETE',
-      body: JSON.stringify(notEqualToID),
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }).then(setPeople(notEqualToID));
   }
 
   return (
@@ -63,40 +41,12 @@ export default function Home(props) {
           <label htmlFor='fName'>first name</label>
           <input ref={fNameRef} type='text' id='fName' name='fName' />
 
-          <label htmlFor='lName'>last name</label>
-          <input ref={lNameRef} type='text' id='lName' name='lName' />
-
-          <label htmlFor='email'>Email</label>
-          <input ref={emailRef} type='email' id='email' name='email' />
-
-          <textarea
-            ref={textRef}
-            name='text'
-            id='text'
-            cols='30'
-            rows='10'
-          ></textarea>
-
           <button type='submit'>Submit form</button>
         </form>
         <ul>
           {people.map((person) => {
-            const {
-              id,
-              'first name': fName,
-              'last name': lName,
-              email,
-              text,
-            } = person;
-            return (
-              <li key={id} data-id={id}>
-                <p>{fName}</p>
-                <p>{lName}</p>
-                <p>{email}</p>
-                <p>{text}</p>
-                <button onClick={(e) => handleDelete(e)}>Delete</button>
-              </li>
-            );
+            const { id, fName } = person;
+            return <li key={id}>{fName}</li>;
           })}
         </ul>
       </StyledDiv>

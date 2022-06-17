@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 export function buildPath() {
-  return path.join(process.cwd(), 'data', 'people.json');
+  return path.join(process.cwd(), 'data', 'api.json');
 }
 
 export function extractData(filePath) {
