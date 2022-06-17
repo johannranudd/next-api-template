@@ -18,7 +18,7 @@ export default function Home(props) {
     console.log(`${server}/api/people`);
 
     if (nameRef.current.value) {
-      const res = await fetch(`${server}/api/people`, {
+      fetch(`${server}/api/people`, {
         method: 'POST',
         body: JSON.stringify({
           id: Date.now(),
@@ -30,10 +30,14 @@ export default function Home(props) {
       });
       // .then((res) => res.json())
       // .then((data) => setPeople(data.people));
-      const data = await res.json();
-      console.log(data.people);
-      setPeople(data.people);
+      // const data = await res.json();
+      // console.log(data.people);
+      // setPeople(data.people);
     }
+    const res = await fetch(`${server}/api/people`);
+    const data = await res.json();
+    console.log(data.people);
+    setPeople(data.people);
   }
 
   return (
