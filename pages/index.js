@@ -15,6 +15,7 @@ export default function Home(props) {
   async function handleSubmit(e) {
     e.preventDefault();
     console.log(`${server}/api/people`);
+    console.log(`${server}/api/people`);
 
     if (nameRef.current.value) {
       const res = await fetch(`${server}/api/people`, {
@@ -26,9 +27,11 @@ export default function Home(props) {
         headers: {
           'Content-Type': 'application/json',
         },
-      });
-      const data = await res.json();
-      setPeople(data.people);
+      })
+        .then((res) => res.json())
+        .then((data) => setPeople(data.people));
+      // const data = await res.json();
+      // setPeople(data.people);
     }
   }
 
