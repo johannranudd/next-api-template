@@ -14,7 +14,7 @@ export default function Home(props) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(server);
+    console.log(`${server}/api/people`);
 
     if (nameRef.current.value) {
       const res = await fetch(`${server}/api/people`, {
