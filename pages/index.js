@@ -27,11 +27,12 @@ export default function Home(props) {
         headers: {
           'Content-Type': 'application/json',
         },
-      })
-        .then((res) => res.json())
-        .then((data) => setPeople(data.people));
-      // const data = await res.json();
-      // setPeople(data.people);
+      });
+      // .then((res) => res.json())
+      // .then((data) => setPeople(data.people));
+      const data = await res.json();
+      console.log(data.people);
+      setPeople(data.people);
     }
   }
 
