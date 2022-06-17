@@ -38,11 +38,6 @@ export default function Home(props) {
         },
       });
       fetchOnLoad();
-      // .then((res) => res.json())
-      // .then((data) => setPeople(data.people));
-      // const data = await res.json();
-      // console.log(data.people);
-      // setPeople(data.people);
     }
 
     // setPeople(data.people);
