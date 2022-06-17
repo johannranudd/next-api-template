@@ -1,4 +1,4 @@
-import { server } from '../config';
+import { server } from '../config/index';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRef, useState, useEffect } from 'react';
@@ -50,15 +50,15 @@ export default function Home(props) {
   );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps(context) {
   const res = await fetch(`${server}/api/people`);
   const data = await res.json();
-  // console.log(data);
+  console.log(context);
 
   return {
     props: {
       data,
-      revalidate: 5,
+      revalidate: 10,
       notFound: false,
     },
   };

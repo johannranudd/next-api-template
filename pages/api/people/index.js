@@ -11,10 +11,14 @@ export default function handler(req, res) {
     console.log('POST req 1');
     people.push(req.body);
     fs.writeFileSync(filePath, JSON.stringify(people));
+    // console.log(JSON.stringify(people));
+    // console.log(JSON.stringify(people));
+    // console.log(people);
     res.status(201).json({ people });
   } else {
     console.log('GET req 2');
+    // console.log(JSON.stringify(people));
+    // console.log(people);
     res.status(200).json({ people });
   }
-  setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate');
 }
