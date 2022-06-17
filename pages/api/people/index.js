@@ -1,4 +1,4 @@
-import { people } from '../../../data/people';
+// import { people } from '../../../data/people';
 import fs from 'fs';
 import path from 'path';
 
