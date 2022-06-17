@@ -7,7 +7,7 @@ import { useAppContext } from '../context/context';
 import { buildPath, extractData } from '../utils/fetch';
 
 export default function Home(props) {
-  const [people, setPeople] = useState(props.data.people);
+  // const [people, setPeople] = useState(props.data.people);
 
   const nameRef = useRef();
 
@@ -39,30 +39,29 @@ export default function Home(props) {
 
           <button type='submit'>Submit form</button>
         </form>
-        <ul>
+        {/* <ul>
           {people.map((person) => {
             const { id, name } = person;
             return <li key={id}>{name}</li>;
           })}
-        </ul>
+        </ul> */}
       </StyledDiv>
     </>
   );
 }
 
-export async function getStaticProps(context) {
-  // const res = await fetch(`${server}/api/people`);
-  const res = await fetch(`https://next-api-template.vercel.app/api/people`);
-  const data = await res.json();
+// export async function getStaticProps(context) {
+//   const res = await fetch(`${server}/api/people`);
+//   const data = await res.json();
 
-  return {
-    props: {
-      data,
-      revalidate: 10,
-      notFound: false,
-    },
-  };
-}
+//   return {
+//     props: {
+//       data,
+//       revalidate: 10,
+//       notFound: false,
+//     },
+//   };
+// }
 
 // export async function getStaticProps() {
 //   const res = await fetch(`http://localhost:3000/api/people`);
