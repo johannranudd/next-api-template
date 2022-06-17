@@ -5,7 +5,11 @@ export default function handler(req, res) {
   const filePath = buildPath();
   const data = extractData(filePath);
   if (req.method === 'POST') {
-    data.push(req.body);
+    const test = {
+      id: req.body.id,
+      fName: req.body.fName,
+    };
+    data.push(test);
     fs.writeFileSync(filePath, JSON.stringify(data));
 
     res.status(201).json({ data });

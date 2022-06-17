@@ -28,8 +28,8 @@ export default function Home(props) {
         },
         body: JSON.stringify(person),
       });
-      const getData = await res.json();
-      setPeople(getData.data);
+      // const getData = await res.json();
+      // setPeople(getData.data);
       fNameRef.current.value = '';
     }
   }
