@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRef, useState, useEffect } from 'react';
 import { StyledDiv } from '../styles/index.styles';
 import { useAppContext } from '../context/context';
-import { buildPath, extractData } from './api/people';
+import { buildPath, extractData } from '../utils/fetch';
 
 export default function Home(props) {
   const [people, setPeople] = useState(props.data);
@@ -30,7 +30,7 @@ export default function Home(props) {
         text: textRef.current.value,
       };
 
-      fetch('/api/people', {
+      fetch('/api/post', {
         method: 'POST',
         body: JSON.stringify(formData),
         headers: {
@@ -38,17 +38,6 @@ export default function Home(props) {
           'Content-Type': 'application/json',
         },
       }).then(setPeople([...people, formData]));
-
-      // .then(res => res.json()).then(data => console.log(data));
-
-      // const res = await fetch('/api/people', {
-      //   method: 'POST',
-      //   body: JSON.stringify(formData),
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      // });
-      // const data = await res.json();
     }
   }
 
@@ -57,7 +46,7 @@ export default function Home(props) {
     const notEqualToID = people.filter((person) => person.id !== elementID);
     // const EqualToID = people.filter((person) => person.id === elementID);
 
-    fetch('/api/people', {
+    fetch('/api/delete', {
       method: 'DELETE',
       body: JSON.stringify(notEqualToID),
       headers: {
