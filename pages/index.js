@@ -16,7 +16,7 @@ export default function Home(props) {
     e.preventDefault();
 
     if (nameRef.current.value) {
-      const res = await fetch(`/api/people`, {
+      const res = await fetch(`${server}/api/people`, {
         method: 'POST',
         body: JSON.stringify({
           id: Date.now(),
