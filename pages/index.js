@@ -8,7 +8,6 @@ import { buildPath, extractData } from '../utils/fetch';
 
 export default function Home(props) {
   const [people, setPeople] = useState(props.data.people);
-  // console.log(people);
 
   const nameRef = useRef();
 
@@ -51,19 +50,6 @@ export default function Home(props) {
   );
 }
 
-// export async function getStaticProps() {
-//   const res = await fetch(`http://localhost:3000/api/people`);
-//   const data = await res.json();
-
-//   return {
-//     props: {
-//       data,
-//       revalidate: 5,
-//       notFound: false,
-//     },
-//   };
-// }
-
 export async function getStaticProps() {
   const res = await fetch(`${server}/api/people`);
   const data = await res.json();
@@ -77,3 +63,16 @@ export async function getStaticProps() {
     },
   };
 }
+
+// export async function getStaticProps() {
+//   const res = await fetch(`http://localhost:3000/api/people`);
+//   const data = await res.json();
+
+//   return {
+//     props: {
+//       data,
+//       revalidate: 5,
+//       notFound: false,
+//     },
+//   };
+// }

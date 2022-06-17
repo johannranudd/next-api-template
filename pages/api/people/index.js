@@ -8,12 +8,12 @@ export default function handler(req, res) {
   const people = JSON.parse(readFile);
   // console.log(data);
   if (req.method === 'POST') {
-    console.log('POST req');
+    console.log('POST req 1');
     people.push(req.body);
     fs.writeFileSync(filePath, JSON.stringify(people));
     res.status(201).json({ people });
   } else {
-    console.log('GET req');
+    console.log('GET req 2');
     res.status(200).json({ people });
   }
 }
