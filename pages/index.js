@@ -51,9 +51,9 @@ export default function Home(props) {
 }
 
 export async function getStaticProps(context) {
-  const res = await fetch(`${server}/api/people`);
+  // const res = await fetch(`${server}/api/people`);
+  const res = await fetch(`https://next-api-template.vercel.app/api/people`);
   const data = await res.json();
-  console.log(context);
 
   return {
     props: {
