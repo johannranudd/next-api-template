@@ -1,3 +1,4 @@
+import { server } from '../config';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRef, useState, useEffect } from 'react';
@@ -6,31 +7,27 @@ import { useAppContext } from '../context/context';
 import { buildPath, extractData } from '../utils/fetch';
 
 export default function Home(props) {
-  const [people, setPeople] = useState(props.data);
+  const [people, setPeople] = useState(props.data.people);
   // console.log(people);
 
-  const fNameRef = useRef();
+  const nameRef = useRef();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const fName = fNameRef.current.value;
 
-    if (fName) {
-      const person = {
-        id: Date.now(),
-        fName: fName,
-      };
-      const res = await fetch('/api/handler', {
+    if (nameRef.current.value) {
+      const res = await fetch(`/api/people`, {
         method: 'POST',
+        body: JSON.stringify({
+          id: Date.now(),
+          name: nameRef.current.value,
+        }),
         headers: {
-          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(person),
       });
-      const getData = await res.json();
-      setPeople(getData.data);
-      fNameRef.current.value = '';
+      const data = await res.json();
+      setPeople(data.people);
     }
   }
 
@@ -39,14 +36,14 @@ export default function Home(props) {
       <StyledDiv>
         <form onSubmit={handleSubmit}>
           <label htmlFor='fName'>first name</label>
-          <input ref={fNameRef} type='text' id='fName' name='fName' />
+          <input ref={nameRef} type='text' id='fName' name='fName' />
 
           <button type='submit'>Submit form</button>
         </form>
         <ul>
           {people.map((person) => {
-            const { id, fName } = person;
-            return <li key={id}>{fName}</li>;
+            const { id, name } = person;
+            return <li key={id}>{name}</li>;
           })}
         </ul>
       </StyledDiv>
@@ -54,9 +51,23 @@ export default function Home(props) {
   );
 }
 
+// export async function getStaticProps() {
+//   const res = await fetch(`http://localhost:3000/api/people`);
+//   const data = await res.json();
+
+//   return {
+//     props: {
+//       data,
+//       revalidate: 5,
+//       notFound: false,
+//     },
+//   };
+// }
+
 export async function getStaticProps() {
-  const filePath = buildPath();
-  const data = extractData(filePath);
+  const res = await fetch(`${server}/api/people`);
+  const data = await res.json();
+  // console.log(data);
 
   return {
     props: {
