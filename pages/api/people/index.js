@@ -16,4 +16,5 @@ export default function handler(req, res) {
     console.log('GET req 2');
     res.status(200).json({ people });
   }
+  setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate');
 }
