@@ -8,13 +8,22 @@ import { buildPath, extractData } from '../utils/fetch';
 
 export default function Home(props) {
   const [people, setPeople] = useState(props.data.people);
-  // console.log(props.);
+  console.log('people: ', people);
+
+  async function fetchOnLoad() {
+    const res = await fetch(`${server}/api/people`);
+    const data = await res.json();
+    setPeople(data.people);
+  }
+
+  useEffect(() => {
+    fetchOnLoad();
+  }, []);
 
   const nameRef = useRef();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(`${server}/api/people`);
     console.log(`${server}/api/people`);
 
     if (nameRef.current.value) {
@@ -28,16 +37,15 @@ export default function Home(props) {
           'Content-Type': 'application/json',
         },
       });
+      fetchOnLoad();
       // .then((res) => res.json())
       // .then((data) => setPeople(data.people));
       // const data = await res.json();
       // console.log(data.people);
       // setPeople(data.people);
     }
-    const res = await fetch(`${server}/api/people`);
-    const data = await res.json();
-    console.log(data.people);
-    setPeople(data.people);
+
+    // setPeople(data.people);
   }
 
   return (
