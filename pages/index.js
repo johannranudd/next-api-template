@@ -15,6 +15,7 @@ export default function Home(props) {
         method: 'GET',
         mode: 'no-cors',
       });
+      // no cors
       const data = await res.json();
       setPeople(data.people);
     } catch (e) {
