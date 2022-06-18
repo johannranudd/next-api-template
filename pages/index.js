@@ -16,9 +16,9 @@ export default function Home(props) {
     setPeople(data.people);
   }
 
-  useEffect(() => {
-    fetchOnLoad();
-  }, []);
+  // useEffect(() => {
+  //   fetchOnLoad();
+  // }, []);
 
   const nameRef = useRef();
 
