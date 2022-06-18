@@ -11,7 +11,10 @@ export default function Home(props) {
 
   async function fetchOnLoad() {
     try {
-      const res = await fetch(`${server}/api/people`);
+      const res = await fetch(`${server}/api/people`, {
+        method: 'GET',
+        mode: 'no-cors',
+      });
       const data = await res.json();
       setPeople(data.people);
     } catch (e) {
