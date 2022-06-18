@@ -10,9 +10,13 @@ export default function Home(props) {
   const [people, setPeople] = useState(props.data.people);
 
   async function fetchOnLoad() {
-    const res = await fetch(`${server}/api/people`);
-    const data = await res.json();
-    setPeople(data.people);
+    try {
+      const res = await fetch(`${server}/api/people`);
+      const data = await res.json();
+      setPeople(data.people);
+    } catch (e) {
+      console.error(e, 'error in fetchOnLoad()');
+    }
   }
 
   useEffect(() => {
@@ -26,17 +30,22 @@ export default function Home(props) {
     console.log(`${server}/api/people`);
 
     if (nameRef.current.value) {
-      fetch(`${server}/api/people`, {
-        method: 'POST',
-        body: JSON.stringify({
-          id: Date.now(),
-          name: nameRef.current.value,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      fetchOnLoad();
+      try {
+        fetch(`${server}/api/people`, {
+          method: 'POST',
+          body: JSON.stringify({
+            id: Date.now(),
+            name: nameRef.current.value,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+      } catch (e) {
+        console.error(e, 'error in handleSubmit()');
+      } finally {
+        fetchOnLoad();
+      }
     }
   }
 
