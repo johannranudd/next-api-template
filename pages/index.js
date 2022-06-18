@@ -34,8 +34,8 @@ export default function Home(props) {
         id: Date.now(),
         name: nameRef.current.value,
       };
-      const test = JSON.parse(JSON.stringify(formData));
-      console.log(test);
+      // const test = JSON.parse(JSON.stringify(formData));
+      // console.log(JSON.stringify(formData));
       try {
         fetch(`${server}/api/people`, {
           method: 'POST',
