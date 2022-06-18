@@ -1,25 +1,16 @@
-// import { people } from '../../../data/people';
-import fs from 'fs';
-import path from 'path';
+import { people } from '../../../data/people';
+// import fs from 'fs';
+// import path from 'path';
 
 export default function handler(req, res) {
-  try {
-    const filePath = path.join(process.cwd(), 'data', 'people.json');
-    const readFile = fs.readFileSync(filePath);
-    const people = JSON.parse(readFile);
+  if (req.method === 'POST') {
+    console.log('POST request');
+    console.log(req.body);
+    people.push(req.body);
+    res.status(201).json({ people: people });
+  } else {
+    console.log('GET request');
 
-    if (req.method === 'POST') {
-      console.log('POST req 1');
-      console.log(req.body);
-      people.push(req.body);
-      fs.writeFileSync(filePath, JSON.stringify(people));
-      res.status(201).json({ people });
-    } else {
-      console.log('GET req 2');
-
-      res.status(200).json({ people });
-    }
-  } catch (e) {
-    console.error(e, 'error occured in handler()');
+    res.status(200).json({ people: people });
   }
 }

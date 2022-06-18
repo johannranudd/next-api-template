@@ -9,6 +9,7 @@ import { getData } from '../utils/fetch';
 
 export default function Home(props) {
   const [people, setPeople] = useState(props.data.people);
+  // console.log(people);
 
   // useEffect(() => {
   //   getData();
@@ -18,22 +19,26 @@ export default function Home(props) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(`${server}/api/people`);
+    // console.log(`${server}/api/people`);
 
     if (nameRef.current.value) {
-      console.log(nameRef.current.value);
+      // console.log(nameRef.current.value);
+      const newObject = {
+        id: Date.now(),
+        name: nameRef.current.value,
+      };
+      // console.log(JSON.stringify(newObject));
 
-      fetch(`${server}/api/people`, {
+      const res = await fetch(`${server}/api/people`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ msg: 'this is a POST request' }),
-      })
-        .then((res) => res.json())
-        .then((data) => console.log(data))
-        .catch((e) => console.log(e, 'handleSubmit'));
+        body: JSON.stringify(newObject),
+      });
+      const newData = await res.json();
+      setPeople(newData.people);
     }
   }
 
@@ -59,6 +64,7 @@ export default function Home(props) {
 
 export async function getStaticProps(context) {
   const data = await getData(`${server}/api/people`);
+  // console.log(data);
   return {
     props: {
       data,
