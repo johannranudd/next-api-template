@@ -8,7 +8,7 @@ import { buildPath, extractData } from '../utils/fetch';
 
 export default function Home(props) {
   const [people, setPeople] = useState(props.data.people);
-  console.log('people: ', people);
+  // console.log('people: ', people);
 
   async function fetchOnLoad() {
     const res = await fetch(`${server}/api/people`);
@@ -39,8 +39,6 @@ export default function Home(props) {
       });
       fetchOnLoad();
     }
-
-    // setPeople(data.people);
   }
 
   return (
