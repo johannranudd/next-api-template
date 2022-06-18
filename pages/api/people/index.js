@@ -10,11 +10,13 @@ export default function handler(req, res) {
 
     if (req.method === 'POST') {
       console.log('POST req 1');
+      console.log(req.body);
       people.push(req.body);
       fs.writeFileSync(filePath, JSON.stringify(people));
       res.status(201).json({ people });
     } else {
       console.log('GET req 2');
+
       res.status(200).json({ people });
     }
   } catch (e) {

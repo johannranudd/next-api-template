@@ -22,6 +22,18 @@ export default function Home(props) {
 
     if (nameRef.current.value) {
       console.log(nameRef.current.value);
+
+      fetch(`${server}/api/people`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ msg: 'this is a POST request' }),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((e) => console.log(e, 'handleSubmit'));
     }
   }
 
