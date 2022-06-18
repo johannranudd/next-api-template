@@ -12,7 +12,7 @@ export default function handler(req, res) {
 
       people.push(req.body);
       fs.writeFileSync(filePath, JSON.stringify(people));
-      res.status(201).json({ people });
+      res.status(201).json(people);
     } else {
       console.log('GET req 2');
 
