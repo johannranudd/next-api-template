@@ -40,9 +40,12 @@ export default function Home(props) {
           headers: {
             'Content-Type': 'application/json',
           },
-        });
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((e) => console.log(e, 'error in handleSubmit() 1'));
       } catch (e) {
-        console.error(e, 'error in handleSubmit()');
+        console.error(e, 'error in handleSubmit() 2');
       } finally {
         fetchOnLoad();
       }
