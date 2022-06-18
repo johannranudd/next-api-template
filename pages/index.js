@@ -30,13 +30,16 @@ export default function Home(props) {
     console.log(`${server}/api/people`);
 
     if (nameRef.current.value) {
+      const formData = {
+        id: Date.now(),
+        name: nameRef.current.value,
+      };
+      const test = JSON.parse(JSON.stringify(formData));
+      console.log(test);
       try {
         fetch(`${server}/api/people`, {
           method: 'POST',
-          body: JSON.stringify({
-            id: Date.now(),
-            name: nameRef.current.value,
-          }),
+          body: JSON.stringify(formData),
           headers: {
             'Content-Type': 'application/json',
           },
