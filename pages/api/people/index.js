@@ -15,7 +15,6 @@ export default function handler(req, res) {
       res.status(201).json({ people });
     } else {
       console.log('GET req 2');
-
       res.status(200).json({ people });
     }
   } catch (e) {

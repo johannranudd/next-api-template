@@ -5,27 +5,14 @@ import { useRef, useState, useEffect } from 'react';
 import { StyledDiv } from '../styles/index.styles';
 import { useAppContext } from '../context/context';
 import { buildPath, extractData } from '../utils/fetch';
+import { getData } from '../utils/fetch';
 
 export default function Home(props) {
   const [people, setPeople] = useState(props.data.people);
 
-  async function fetchOnLoad() {
-    try {
-      const res = await fetch(`${server}/api/people`, {
-        method: 'GET',
-        mode: 'cors',
-      });
-      // no cors
-      const data = await res.json();
-      setPeople(data.people);
-    } catch (e) {
-      console.error(e, 'error in fetchOnLoad()');
-    }
-  }
-
-  useEffect(() => {
-    fetchOnLoad();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   const nameRef = useRef();
 
@@ -34,29 +21,7 @@ export default function Home(props) {
     console.log(`${server}/api/people`);
 
     if (nameRef.current.value) {
-      const formData = {
-        id: Date.now(),
-        name: nameRef.current.value,
-      };
-      // const test = JSON.parse(JSON.stringify(formData));
-      // console.log(JSON.stringify(formData));
-      try {
-        fetch(`${server}/api/people`, {
-          method: 'POST',
-          body: JSON.stringify(formData),
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-        })
-          .then((res) => res.json())
-          .then((data) => console.log(data))
-          .catch((e) => console.log(e, 'error in handleSubmit() 1'));
-      } catch (e) {
-        console.error(e, 'error in handleSubmit() 2');
-      } finally {
-        fetchOnLoad();
-      }
+      console.log(nameRef.current.value);
     }
   }
 
@@ -81,9 +46,7 @@ export default function Home(props) {
 }
 
 export async function getStaticProps(context) {
-  const res = await fetch(`${server}/api/people`);
-  const data = await res.json();
-
+  const data = await getData(`${server}/api/people`);
   return {
     props: {
       data,
