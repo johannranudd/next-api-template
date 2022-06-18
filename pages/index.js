@@ -63,7 +63,6 @@ export default function Home(props) {
 
 export async function getStaticProps(context) {
   const data = await getData(`${server}/api/people`);
-  // console.log(data);
   return {
     props: {
       data,
