@@ -13,7 +13,7 @@ export default function Home(props) {
     try {
       const res = await fetch(`${server}/api/people`, {
         method: 'GET',
-        mode: 'no-cors',
+        mode: 'cors',
       });
       // no cors
       const data = await res.json();
