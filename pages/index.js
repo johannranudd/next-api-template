@@ -10,10 +10,15 @@ import { getData } from '../utils/fetch';
 export default function Home(props) {
   const [people, setPeople] = useState(props.data.people);
   // console.log(people);
+  async function getdataOnLoad() {
+    const data = await getData(`${server}/api/people`);
 
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+    setPeople(data.people);
+    // return data.people;
+  }
+  useEffect(() => {
+    getdataOnLoad();
+  }, []);
 
   const nameRef = useRef();
 
