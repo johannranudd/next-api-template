@@ -41,6 +41,7 @@ export default function Home(props) {
           method: 'POST',
           body: JSON.stringify(formData),
           headers: {
+            Accept: 'application/json',
             'Content-Type': 'application/json',
           },
         })
