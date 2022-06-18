@@ -9,30 +9,24 @@ import { getData } from '../utils/fetch';
 
 export default function Home(props) {
   const [people, setPeople] = useState(props.data.people);
-  // console.log(people);
-  async function getdataOnLoad() {
-    const data = await getData(`${server}/api/people`);
-
-    setPeople(data.people);
-    // return data.people;
-  }
-  useEffect(() => {
-    getdataOnLoad();
-  }, []);
-
   const nameRef = useRef();
+
+  // async function getdataOnLoad() {
+  //   const data = await getData(`${server}/api/people`);
+  //   setPeople(data.people);
+  // }
+  // useEffect(() => {
+  //   getdataOnLoad();
+  // }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    // console.log(`${server}/api/people`);
 
     if (nameRef.current.value) {
-      // console.log(nameRef.current.value);
       const newObject = {
         id: Date.now(),
         name: nameRef.current.value,
       };
-      // console.log(JSON.stringify(newObject));
 
       const res = await fetch(`${server}/api/people`, {
         method: 'POST',
