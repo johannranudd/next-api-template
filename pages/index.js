@@ -26,10 +26,10 @@ export default function Home(props) {
     e.preventDefault();
 
     if (nameRef.current.value) {
-      const newObject = {
-        id: Date.now(),
-        name: nameRef.current.value,
-      };
+      // const newObject = {
+      //   id: Date.now(),
+      //   name: nameRef.current.value,
+      // };
 
       const res = await fetch(`/api/people`, {
         method: 'POST',
@@ -37,7 +37,7 @@ export default function Home(props) {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newObject),
+        body: JSON.stringify(nameRef.current.value),
       });
       const newData = await res.json();
       setPeople(newData.people);

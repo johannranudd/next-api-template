@@ -9,8 +9,14 @@ export default function handler(req, res) {
 
   if (req.method === 'POST') {
     console.log('POST request');
-    // console.log(req.body);
-    data.push(req.body);
+    console.log(req.body);
+    const newObject = {
+      id: new Date().toISOString(),
+      name: req.body,
+    };
+    console.log(JSON.stringify(newObject));
+    console.log(newObject);
+    data.push(newObject);
     fs.writeFileSync(filePath, JSON.stringify(data));
     res.status(201).json({ people: data });
   } else {
