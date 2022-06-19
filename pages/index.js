@@ -12,8 +12,11 @@ export default function Home(props) {
   const nameRef = useRef();
 
   // async function getdataOnLoad() {
-  //   const data = await getData(`${server}/api/people`);
-  //   setPeople(data.people);
+  //   const data = await getData(
+  //     `https://console.firebase.google.com/u/0/project/next-api-template/firestore/data.json`
+  //   );
+  //   console.log(data);
+  //   // setPeople(data.people);
   // }
   // useEffect(() => {
   //   getdataOnLoad();
@@ -28,7 +31,7 @@ export default function Home(props) {
         name: nameRef.current.value,
       };
 
-      const res = await fetch(`${server}/api/people`, {
+      const res = await fetch(`/api/people`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
