@@ -1,27 +1,25 @@
-import { people } from '../../../data/people';
+// import { people } from '../../../data/people';
 import fs from 'fs';
 import path from 'path';
 
-export default function handler(req, res) {
-  const filePath = path.join(process.cwd(), 'data', 'people.json');
-  const readFile = fs.readFileSync(filePath);
-  const data = JSON.parse(readFile);
-
+export default async function handler(req, res) {
   if (req.method === 'POST') {
-    console.log('POST request');
-    console.log(req.body);
+    const filePath = path.join(process.cwd(), 'data', 'people.json');
+    const readFile = fs.readFileSync(filePath);
+    const data = JSON.parse(readFile);
+
     const newObject = {
       id: new Date().toISOString(),
       name: req.body,
     };
-    console.log(JSON.stringify(newObject));
-    console.log(newObject);
     data.push(newObject);
+    console.log({ people: data });
     fs.writeFileSync(filePath, JSON.stringify(data));
     res.status(201).json({ people: data });
   } else {
-    // console.log('GET request');
-
+    const filePath = path.join(process.cwd(), 'data', 'people.json');
+    const readFile = fs.readFileSync(filePath);
+    const data = JSON.parse(readFile);
     res.status(200).json({ people: data });
   }
 }
